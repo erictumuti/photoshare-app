@@ -21,4 +21,5 @@ Route::post('profile', 'UserController@update_avatar');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/albums/create', 'AlbumController@create');
 
