@@ -7,10 +7,22 @@ use Illuminate\Support\Str;
 use App\Album;
 class AlbumController extends Controller
 {
-    //
+    public function getAlbums(){
+        $albums = Album::with('category')->where('user_id',auth()->user()->id)->get();
+        return $albums;
+    }
+
+
+    public function index(){
+      return view('album.index');
+    }
+
+
     public function create(){
         return view ('album.create');
     }
+
+
     public function store(Request $request){
         $this->validate($request,[
             'name' => 'required',
@@ -31,5 +43,35 @@ class AlbumController extends Controller
        ]);
        $id = $album->id;
        return response()->json(['id'=>$id]);
+    }
+    public function getOneAlbum($id){
+        return Album::with('category')->find($id);
+    }
+    public function update($id,Request $request){
+        $findAlbum = Album::find($id);
+        $photo = $findAlbum->image;
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $photo = $file->hashName();
+            $file->move('./album/',$photo);
+        }
+        $album = Album::find($id);
+        $album->name = $request->name;
+        $album->description = $request->description;
+        $album->category_id = $request->category_id;
+        $album->image = $photo;
+        $album->save();
+
+        $success = $album->save();
+        if($success){
+            return response()->json($this->getAlbums());
+        }
+    }
+
+    public function destroy($id){
+        $album = Album::find($id)->delete();
+        if($album){
+            return response()->json($this->getAlbums());
+        }
     }
 }

@@ -21,5 +21,12 @@ Route::post('profile', 'UserController@update_avatar');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/albums/create', 'AlbumController@create')->middleware('auth');
+Route::get('/getalbums', 'AlbumController@getAlbums')->middleware('auth');
+Route::get('/albums', 'AlbumController@index')->middleware('auth');
+Route::get('/albums/create', 'AlbumController@create')->name('album.create')->middleware('auth');
 Route::post('/albums/store', 'AlbumController@store');
+Route::put('/albums/{id}/edit', 'AlbumController@update')->middleware('auth');
+Route::delete('/albums/{id}/delete', 'AlbumController@destroy')->middleware('auth');
+
+
+
