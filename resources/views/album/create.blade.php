@@ -8,7 +8,7 @@
                 <center><div class="card-header">{{ __('Album') }}</div></center>
 
                 <div class="card-body">
-
+                    <album></album>
                 </div>
             </div>
         </div>
