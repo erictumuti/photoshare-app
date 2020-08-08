@@ -13,12 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Auth::routes();
+
+Route::get('/', 'FrontendController@index');
+
 Route::get('profile', 'UserController@profile');
 Route::post('profile', 'UserController@update_avatar');
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/getalbums', 'AlbumController@getAlbums')->middleware('auth');
@@ -27,6 +30,15 @@ Route::get('/albums/create', 'AlbumController@create')->name('album.create')->mi
 Route::post('/albums/store', 'AlbumController@store');
 Route::put('/albums/{id}/edit', 'AlbumController@update')->middleware('auth');
 Route::delete('/albums/{id}/delete', 'AlbumController@destroy')->middleware('auth');
+
+
+
+Route::get('upload/images/{id}', 'GalleryController@create')->middleware('auth');
+Route::post('uploadImage', 'GalleryController@upload')->middleware('auth');
+Route::get('getImages', 'GalleryController@images')->middleware('auth');
+Route::delete('/image/{id}', 'GalleryController@destroy')->middleware('auth');
+Route::get('/albums/{slug}/{id}', 'GalleryController@viewAlbum');
+
 
 
 
