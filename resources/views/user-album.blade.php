@@ -2,14 +2,12 @@
 
 @section('content')
             <div class="container">
-            <div class="jumbotron jumbotron-fluid">
-            <h1 class="display-4">
-            Share Your Photos
-            </h1>
-            <p class="lead">
-            Share your photos with people
-            </p>
-            </div>
+            <img src="{{asset('banner')}}/banner.jpg" style="width: 100%;" alt="">
+			<br><br>
+            @if(auth()->user()->id!=$userId)
+        <follow user-id="{{$userId}}" follows="{{$follows}}"></follow>
+           @endif
+           <br>
             <div class="row">
             @foreach($albums as $album)
             <div class="col-lg-3">
@@ -27,6 +25,5 @@
             </div>
             @endforeach
             </div>
-            {{$albums->render()}}
             </div>
 @endsection

@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'FrontendController@index');
+Route::get('/user/profile/{id}', 'FrontendController@userAlbum')->name('user.album');
+
+Route::post('/follow', 'FollowerController@followUnfollow')->middleware('auth');
+Route::get('/userfollow', 'FollowerController@userFollow')->name('userfollow');
 
 Route::get('profile', 'UserController@profile');
 Route::post('profile', 'UserController@update_avatar');
@@ -37,7 +41,7 @@ Route::get('upload/images/{id}', 'GalleryController@create')->middleware('auth')
 Route::post('uploadImage', 'GalleryController@upload')->middleware('auth');
 Route::get('getImages', 'GalleryController@images')->middleware('auth');
 Route::delete('/image/{id}', 'GalleryController@destroy')->middleware('auth');
-Route::get('/albums/{slug}/{id}', 'GalleryController@viewAlbum');
+Route::get('/albums/{slug}/{id}', 'GalleryController@viewAlbum')->name('view.album');
 
 
 

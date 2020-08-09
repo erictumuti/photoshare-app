@@ -42,9 +42,14 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                    <a class="navbar-brand" href="{{ url('/albums') }}">
-                          My Album
+                    @if(Auth::check())
+                    <a class="navbar-brand" href="{{route('user.album',[auth()->user()->id])}}">
+                          Album
                      </a>
+                     <a class="navbar-brand" href="{{ url('/albums') }}">
+                          Dashboard
+                     </a>
+                     @endif
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -67,6 +72,9 @@
                                 <a class="dropdown-item" href="/profile">
                                         {{ __('Profile') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{route('userfollow')}}">
+                                        {{ __('Following') }}
+                                    </a>
                                     <a class="dropdown-item fa fa-btn fa-sign-out" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -88,6 +96,6 @@
             @yield('content')
         </main>
     </div>
-    
+    <script id="dsq-count-scr" src="//photoshareapp.disqus.com/count.js" async></script>
 </body>
 </html>

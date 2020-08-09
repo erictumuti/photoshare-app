@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Image;
 use App\Album;
+use App\User;
 class GalleryController extends Controller
 {
     public function create($id){
@@ -45,6 +46,10 @@ class GalleryController extends Controller
 
     public function viewAlbum($slug,$id){
         $albums = Album::with('albumimages')->where('slug',$slug)->where('id',$id)->get();
-        return view('album.show',compact('albums'));
+        if(\Auth::check()){
+            $userId = Album::where('id',$id)->first()->user_id;
+            $follows = (new User)->amIfollowing($userId);
+        }
+        return view('album.show',compact('albums','follows','userId'));
     }
 }

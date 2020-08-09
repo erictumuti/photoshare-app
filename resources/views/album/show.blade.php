@@ -20,6 +20,14 @@
    <div class="col-md-12">
    <div class="card-body">
    @foreach($albums as $album)
+   <p>
+   @if(Auth::check()&&auth()->user()->id!=$userId)
+   <follow user-id="{{$userId}}" follows="{{$follows}}"></follow>
+   @endif
+   Created by: <a href="{{route('user.album',[$album->user_id])}}">
+   {{$album->user->name}}
+   </a>
+   </p>
    <p>{{$album->name}}</p>
    <p>{{$album->description}}</p>
    @endforeach
