@@ -20,6 +20,7 @@ Auth::routes();
 
 Route::get('/', 'FrontendController@index');
 Route::get('/user/profile/{id}', 'FrontendController@userAlbum')->name('user.album');
+Route::get('/{id}/category', 'FrontendController@albumCategory')->name('album.category');
 
 Route::post('/follow', 'FollowerController@followUnfollow')->middleware('auth');
 Route::get('/userfollow', 'FollowerController@userFollow')->name('userfollow');

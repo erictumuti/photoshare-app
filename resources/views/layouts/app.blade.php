@@ -42,6 +42,21 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="navbar-brand" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="position:relative; padding-left:50px;">
+                                <span></span>
+                                <span class="caret"></span>
+                                Browse
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @foreach(App\Category::all() as $cat)
+                                <a class="dropdown-item" href="{{$cat->id}}/category">
+                                    {{$cat->name}}
+                                    </a>
+                                    @endforeach
+                                </div>
+                            </li>
                     @if(Auth::check())
                     <a class="navbar-brand" href="{{route('user.album',[auth()->user()->id])}}">
                           Album
