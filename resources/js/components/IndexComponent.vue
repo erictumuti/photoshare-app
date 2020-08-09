@@ -43,6 +43,7 @@
 		</tr>
 			</tbody>
 		</table>
+		<pagination :meta="meta" v-on:pagination="getAlbums"></pagination>
          <edit :editrecord="records" @recordUpdated="recordUpdate"></edit>
 	</div>
 </template>
@@ -56,14 +57,24 @@ export default {
 		}
 	},
 	created(){
-		//get the albums from the user created albums refer to url in web on getalbums
-         axios.get('/getalbums').then((response)=>{
-			this.albums = response.data
+      this.getAlbums()
+	},
+	methods:{
+		getAlbums(page){
+			//get the albums from the user created albums refer to url in web on getalbums
+		 axios.get('/getalbums',{
+			 params:{
+				 page
+			 }
+		 }
+
+		 ).then((response)=>{
+			this.albums = response.data.data
+			this.meta = response.data.meta
 		 }).catch((error)=>{
 			 console.log(error)
 		 })
-	},
-	methods:{
+		},
 		edit(id){
 			axios.get('/api/albums/'+id).then((response)=>{
 				this.records = response.data
